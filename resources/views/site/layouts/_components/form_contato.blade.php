@@ -13,7 +13,7 @@
         <option value="3">Reclamação</option>
     </select>
     <br>
-    <textarea class="borda-preta">Preencha aqui a sua mensagem</textarea>
+    <textarea class="borda-preta" name="mensagem">Preencha aqui a sua mensagem</textarea>
     <br>
     <button type="submit" class="borda-preta">ENVIAR</button>
 </form>
