@@ -31,7 +31,6 @@ class ContatoController extends Controller
             'email' => 'email',
             ],
             [
-                
                 'required' => 'O campo :attribute deve ser preenchido'
             ]
         );
