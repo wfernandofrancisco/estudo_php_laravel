@@ -16,33 +16,34 @@
 </div>
 
 <div class="container">
-    <div class="row mt-3">{{$msg}}</div>
+    <div class="row mt-3">{{$msg ?? ''}}</div>
     <div class="row mt-3">
         <form method="post" action="{{route('app.fornecedor.adicionar')}}">
             @csrf
+            <input type="hidden" name="id" value="{{$fornecedor->id ?? ''}}" >
             <div class="col-md-12">
                 <label> Nome</label>
-                <input type="text" class="form-control" name="nome" value="{{old('nome')}}">
+                <input type="text" class="form-control" name="nome" value="{{ $fornecedor->nome ?? old('nome') }}">
                 {{ $errors->has('nome') ? $errors->first('nome') : '' }}
             </div>
             <div class="col-md-12">
                 <label> Site</label>
-                <input type="text" class="form-control" name="site" value="{{old('site')}}">
+                <input type="text" class="form-control" name="site" value="{{ $fornecedor->site ?? old('site') }}">
                 {{ $errors->has('site') ? $errors->first('site') : '' }}
             </div>
             <div class="col-md-12">
                 <label> UF</label>
-                <input type="text" class="form-control" name="uf" value="{{old('uf')}}">
+                <input type="text" class="form-control" name="uf" value="{{ $fornecedor->uf ?? old('uf')}}">
                 {{ $errors->has('uf') ? $errors->first('uf') : '' }}
             </div>
             <div class="col-md-12">
                 <label> E-mail</label>
-                <input type="text" class="form-control" name="email" value="{{old('email')}}">
+                <input type="text" class="form-control" name="email" value="{{$fornecedor->email ?? old('email')}}">
                 {{ $errors->has('email') ? $errors->first('email') : '' }}
             </div>
             <div class="col-md-12">
                 <label>Codigo</label>
-                <input type="text" class="form-control" name="email_alternativo" value="{{old('email_alternativo')}}">
+                <input type="text" class="form-control" name="email_alternativo" value="{{$fornecedor->email_alternativo ?? old('email_alternativo')}}">
             </div>
             <div class="col-md-12 mt-2">
                 <button class="btn btn-success"> Adicionar</button>

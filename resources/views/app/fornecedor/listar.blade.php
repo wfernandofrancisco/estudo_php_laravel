@@ -11,7 +11,7 @@
         <a href="{{route('app.fornecedor.adicionar')}}" class="btn btn-primary"> Novo</a>
     </div>
     <div class="col-md-1">
-        <a href="{{route('app.fornecedor.listar')}}" class="btn btn-info"> Consulta</a>
+        <a href="{{route('app.fornecedor.index')}}" class="btn btn-info"> Consulta</a>
     </div>
 </div>
 
@@ -23,8 +23,8 @@
                     <th>Fornecedor</th>
                     <th>UF</th>
                     <th>Email</th>
-                    <th></th>
-                    <th></th>
+                    <th>Editar</th>
+                    <th>Excluir</th>
                 </tr>
             </thead>
             <tbody>
@@ -33,14 +33,16 @@
                         <td>{{$fornecedor->nome}}</td>
                         <td>{{$fornecedor->uf}}</td>
                         <td>{{$fornecedor->email}}</td>
-                        <td></td>
-                        <td></td>
+                        <td><a href="{{route('app.fornecedor.editar', $fornecedor->id)}}" class="btn btn-link text-primary"> Editar</a></td>
+                        <td><a href="{{route('app.fornecedor.excluir',  $fornecedor->id)}}" class="btn btn-link text-danger"> Excluir</a></td>
                     </tr>
                 @endforeach
-               
             </tbody>
         </table>
-        
+        {{$fornecedores->appends($request)->links()}}
+       
+        <br>
+        <label>Exibibindo {{$fornecedores->count()}} fornecedores de {{$fornecedores->total()}} (de {{$fornecedores->firstItem()}} a {{$fornecedores->lastItem()}}) </label>
     </div>
 </div>
 @endsection
