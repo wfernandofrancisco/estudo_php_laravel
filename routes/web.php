@@ -42,7 +42,10 @@ Route::middleware('log.acesso','autenticacao')->prefix('/app')->group(function()
     Route::get('/fornecedor/editar/{id}/{msg?}','FornecedorController@editar')->name('app.fornecedor.editar');
     Route::get('/fornecedor/excluir/{id}','FornecedorController@excluir')->name('app.fornecedor.excluir');
     
-    Route::get('/produto','ProdutoController@index')->name('app.produto');
+    Route::resource('produto','ProdutoController');
+
+    Route::resource('produto-detalhe','ProdutoDetalheController');
+    
 });
 
 Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
