@@ -1,0 +1,25 @@
+Eloquento ORM 1 para 1 
+
+Quando precisar pegar dados de outra tabela que contem 
+chave estrangeira, é necessario no model que contem a chave primaria
+colocar o metodo com o nome da tabela "estrangeira", passando o caminho do model
+
+public function produtoDetalhe(){
+	return $this->hasOne('App\ProdutoDetalhe');
+}
+
+Quando precisar ser ao contrario, trazer os dados da tabela principal
+se usa o belongsTo(pertence a este)
+
+public function produto(){
+	return $this->belongsTo('App\Produto');
+}
+
+Aula 28 do Modulo 12 explica como trocar os nomes caso a automacao dos nomes dos controllers e models
+nao estejam corretos com o s no final.
+
+Quando faz relacao com outra tabela, ele é carregado no modo Lazy Loading
+onde voce precisa chamar pelo menos uma vez o campo da outra tabela para poder exibir as informacoes
+Caso precise que ele seja carregado quando ja aparecer a view, voce usa o seguinte metodo no controller
+	$produtos = Produto::with('ProdutoDetalhe')->paginate(10);
+
