@@ -7,6 +7,16 @@
         @csrf
 @endif
     <div class="col-md-12">
+        <label>Fornecedor</label>
+        <select class="form-control" name="fornecedor_id">
+            <option>-- Selecionar --</option>
+            @foreach ($fornecedores as $fornecedor)
+                    <option value="{{$fornecedor->id}}" {{ ($produto->fornecedor_id ?? old('fornecedor_id')) == $fornecedor->id ? 'selected' : ''  }}  >{{$fornecedor->nome}}</option>   
+            @endforeach
+        </select> 
+        <label class="text-danger"> {{ $errors->has('fornecedor_id') ? $errors->first('fornecedor_id') : '' }}</label>
+    </div>
+    <div class="col-md-12">
         <label>Nome</label>
         <input type="text" class="form-control" name="nome" value="{{ $produto->nome ?? old('nome') }}">
         <label class="text-danger"> {{ $errors->has('nome') ? $errors->first('nome') : '' }} </label>

@@ -17,7 +17,7 @@
 
 <div class="container">
     <div class="row mt-3">
-        <table class="table">
+        <table class="table table-bordered table-striped">
             <thead>
                 <tr>
                     <th>Fornecedor</th>
@@ -35,6 +35,27 @@
                         <td>{{$fornecedor->email}}</td>
                         <td><a href="{{route('app.fornecedor.editar', $fornecedor->id)}}" class="btn btn-link text-primary"> Editar</a></td>
                         <td><a href="{{route('app.fornecedor.excluir',  $fornecedor->id)}}" class="btn btn-link text-danger"> Excluir</a></td>
+                    </tr>
+                    <tr>
+                        <td colspan="6">
+                            Lista de produtos
+                            <table class="table table-bordered ">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Produto</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach ($fornecedor->produtos as $key => $produto)
+                                    <tr>
+                                        <td>{{$produto->id}}</td>
+                                        <td>{{$produto->nome}}</td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

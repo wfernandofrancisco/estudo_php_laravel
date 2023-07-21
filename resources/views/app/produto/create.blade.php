@@ -21,7 +21,7 @@
 
 <div class="container">
     <div class="row mt-3">
-        @component('app.produto._components.formulario',['unidades' => $unidades])
+        @component('app.produto._components.formulario',['unidades' => $unidades, 'fornecedores' => $fornecedores])
         @endcomponent
     </div>
 </div>

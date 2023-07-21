@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Produto;
 use App\Unidade;
+use App\Fornecedor;
 use Illuminate\Http\Request;
 
 class ProdutoController extends Controller
@@ -15,7 +16,7 @@ class ProdutoController extends Controller
      */
     public function index(Request $request)
     {
-        $produtos = Produto::paginate(5);
+        $produtos = Produto::with(['fornecedor'])->paginate(5);
         return view('app.produto.index', ['produtos' => $produtos, 'request' => $request->all() ]);
     }
 
@@ -27,7 +28,8 @@ class ProdutoController extends Controller
     public function create()
     {
         $unidades = Unidade::all();
-        return view('app.produto.create', ['unidades' => $unidades]);
+        $fornecedores = Fornecedor::all();
+        return view('app.produto.create', ['unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -42,13 +44,15 @@ class ProdutoController extends Controller
             'nome' => 'required|min:3|max:40',
             'descricao' => 'required|min:1|max:400',
             'peso' => 'required|integer',
-            'unidade_id' => 'exists:unidades,id'
+            'unidade_id' => 'exists:unidades,id',
+            'fornecedor_id' => 'exists:fornecedores,id'
         ];
 
         $feedback = [
             'required' => 'O campo :attribute deve ser preenchido',
             'peso.integer' => 'O campo deve ser número inteiro',
-            'unidade_id.exists' => 'A unidade de medida não existe'
+            'unidade_id.exists' => 'A unidade de medida não existe',
+            'fornecedor_id.exists' => 'O fornecedor não existe'
         ];
 
         $request->validate($regras,$feedback);
@@ -77,7 +81,8 @@ class ProdutoController extends Controller
     public function edit(Produto $produto)
     {
         $unidades = Unidade::all();
-        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades]);
+        $fornecedores = Fornecedor::all();
+        return view('app.produto.edit', ['produto' => $produto, 'unidades' => $unidades, 'fornecedores' => $fornecedores]);
     }
 
     /**
@@ -89,6 +94,22 @@ class ProdutoController extends Controller
      */
     public function update(Request $request, Produto $produto)
     {
+        $regras = [
+            'nome' => 'required|min:3|max:40',
+            'descricao' => 'required|min:1|max:400',
+            'peso' => 'required|integer',
+            'unidade_id' => 'exists:unidades,id',
+            'fornecedor_id' => 'exists:fornecedores,id'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido',
+            'peso.integer' => 'O campo deve ser número inteiro',
+            'unidade_id.exists' => 'A unidade de medida não existe',
+            'fornecedor_id.exists' => 'O fornecedor não existe'
+        ];
+        
+        $request->validate($regras,$feedback);
         //lembrar de comparar os id's
         $produto->update($request->all());
         return redirect()->route('produto.show', ['produto' => $produto->id]);
