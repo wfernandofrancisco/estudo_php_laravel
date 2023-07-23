@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Pedido;
+use App\Cliente;
 
 class PedidoController extends Controller
 {
@@ -11,9 +13,10 @@ class PedidoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
+        $pedidos = Pedido::paginate(10);
+        return view('app.pedido.index', ['pedidos' => $pedidos, 'request' => $request->all()] );
     }
 
     /**
@@ -23,7 +26,8 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        //
+        $clientes = Cliente::all();
+        return view('app.pedido.create', ['clientes' => $clientes] );
     }
 
     /**
@@ -34,7 +38,18 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $regras = [
+            'cliente_id' => 'exists:clientes,id'
+        ];
+
+        $feedback = [
+            'cliente_id.exists' => 'O cliente não existe'
+        ];
+
+        $request->validate($regras,$feedback);
+
+        Pedido::create($request->all());
+        return redirect()->route('pedido.index');
     }
 
     /**

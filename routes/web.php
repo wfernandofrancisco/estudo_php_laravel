@@ -45,8 +45,11 @@ Route::middleware('log.acesso','autenticacao')->prefix('/app')->group(function()
 
     Route::resource('cliente','ClienteController');
     Route::resource('pedido','PedidoController');
-    Route::resource('pedido-produto','PedidoProdutoController');
-    
+    //Route::resource('pedido-produto','PedidoProdutoController');
+    Route::get('pedido-produto/create/{pedido}','PedidoProdutoController@create')->name('pedido-produto.create');
+    Route::post('pedido-produto/store/{pedido}','PedidoProdutoController@store')->name('pedido-produto.store');
+    //Route::delete('pedido-produto.destroy/{pedido}/{produto}','PedidoProdutoController@destroy')->name('pedido-produtos.destroy');
+    Route::delete('pedido-produto.destroy/{pedidoProduto}','PedidoProdutoController@destroy')->name('pedido-produtos.destroy');
 });
 
 Route::get('/teste/{p1}/{p2}', 'TesteController@teste')->name('teste');
